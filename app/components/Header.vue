@@ -1,57 +1,88 @@
-<template>
+<script setup lang="ts">
+const isMobileMenuOpen = ref(false)
+const colorMode = useColorMode()
+const isMounted = ref(false)
+const sortOpen = ref(false)
 
-    <nav class="px-6 md:px-12 lg:px-24 xl:px-40 py-4 flex items-center justify-between relative">
-        <a href="/">
-            <img src="../assets/Ambiente-Livre-Labs-Logo.png" alt="Logo" class="h-14 w-auto" />
-        </a>
+onMounted(() => {
+    isMounted.value = true
+})
+
+const isDark = computed(() => isMounted.value && colorMode.value === 'dark')
+const colorModeIcon = computed(() => isDark.value
+    ? 'line-md:sunny-outline-to-moon-alt-loop-transition'
+    : 'line-md:moon-alt-to-sunny-outline-loop-transition')
+
+function toggleColorMode() {
+    colorMode.preference = isDark.value ? 'light' : 'dark'
+}
+
+const productItems = [[
+    { label: 'Plugin catalog', to: '/catalog', description: 'Browse integrations and extensions', icon: 'line-md:library' },
+    { label: 'Submit a plugin', to: '/catalog#submit', description: 'Share your work with the community', icon: 'line-md:plus' },
+]]
+
+const serviceItems = [[
+    { label: 'Consulting', to: '#', description: 'Open-source implementation support', icon: 'line-md:briefcase' },
+    { label: 'Support', to: '#', description: 'Get help from our team', icon: 'line-md:chat' },
+]]
+</script>
+
+<template>
+    <nav class="relative flex items-center justify-between gap-6 px-6 py-4 md:px-12 lg:px-24 xl:px-40">
+        <NuxtLink to="/" class="shrink-0 no-underline">
+            <NuxtImg src="/logo.svg" class="h-16 w-32 object-contain" alt="Ambiente Livre Labs" />
+        </NuxtLink>
 
         <!-- Desktop Nav Items -->
-        <div class="hidden md:flex items-center bg-zinc-50 border border-zinc-200 rounded-full px-1 py-1 gap-2">
-            <a href="#"
-                class="px-4 py-1.5 rounded-full text-sm transition-colors bg-white border border-zinc-200 font-medium text-zinc-800 hover:text-zinc-600">Products</a>
-            <a href="#"
-                class="px-4 py-1.5 rounded-full text-sm transition-colors text-zinc-500 hover:text-zinc-400">Services</a>
-            <a href="#"
-                class="px-4 py-1.5 rounded-full text-sm transition-colors text-zinc-500 hover:text-zinc-400">Apps</a>
-            <a href="#"
-                class="px-4 py-1.5 rounded-full text-sm transition-colors text-zinc-500 hover:text-zinc-400">Pricing</a>
-            <a href="#"
-                class="px-4 py-1.5 rounded-full text-sm transition-colors text-zinc-500 hover:text-zinc-400">About</a>
+        <div class="hidden items-center gap-1 rounded-full bg-default px-2 py-1 shadow-sm md:flex">
+            <UDropdownMenu :items="productItems" :content="{ align: 'start' }">
+                <UButton color="neutral" variant="ghost" trailing-icon="line-md:chevron-down">Products</UButton>
+            </UDropdownMenu>
+            <UDropdownMenu :items="serviceItems" :content="{ align: 'start' }">
+                <UButton color="neutral" variant="ghost" trailing-icon="line-md:chevron-down">Services</UButton>
+            </UDropdownMenu>
+            <NuxtLink v-for="label in ['Apps', 'Pricing', 'About']" :key="label" to="#"
+                class="rounded-full px-3 py-2 text-sm text-default no-underline hover:bg-elevated">{{ label }}
+            </NuxtLink>
         </div>
 
         <!-- Desktop CTA Button -->
-        <div class="inline-flex items-center space-x-4">
-            <Icon name="line-md:search" size="1.5rem" mode="svg" />
-            <Icon name="line-md:moon-alt-to-sunny-outline-loop-transition" size="1.5rem" mode="svg" />
-            <Icon name="line-md:moon-alt-loop" size="1.5rem" mode="svg" />
+        <div class="hidden items-center gap-3 md:flex">
+            <ContentSearch />
+            <UButton color="neutral" variant="ghost" square
+                :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'" @click="toggleColorMode">
+                <Icon :name="colorModeIcon" size="1.5rem" aria-hidden="true" />
+            </UButton>
         </div>
 
         <!-- Mobile Hamburger -->
-        <button id="hamburger" onclick="toggleMenu()"
-            class="md:hidden flex flex-col gap-1.5 cursor-pointer bg-transparent border-0 p-1">
-            <span id="bar1" class="block w-6 h-0.5 bg-zinc-800 transition-transform"></span>
-            <span id="bar2" class="block w-6 h-0.5 bg-zinc-800 transition-opacity"></span>
-            <span id="bar3" class="block w-6 h-0.5 bg-zinc-800 transition-transform"></span>
+        <button id="hamburger" :aria-expanded="isMobileMenuOpen" aria-controls="mobileMenu"
+            aria-label="Toggle navigation menu" type="button" @click="isMobileMenuOpen = !isMobileMenuOpen"
+            class="md:hidden flex flex-col gap-1.5 cursor-pointer border-0 bg-transparent p-1">
+            <span id="bar1" class="block w-6 h-0.5 bg-default transition-transform"></span>
+            <span id="bar2" class="block w-6 h-0.5 bg-default transition-opacity"></span>
+            <span id="bar3" class="block w-6 h-0.5 bg-default transition-transform"></span>
         </button>
 
         <!-- Mobile Menu -->
-        <div id="mobileMenu"
-            class="hidden absolute top-full left-0 w-full bg-white border-t border-zinc-200 flex-col p-5 gap-1 md:hidden z-50">
-            <a href="#" class="block px-4 py-2.5 rounded-lg text-sm bg-zinc-50 font-medium text-zinc-800">Products</a>
-            <a href="#" class="block px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50">Services</a>
-            <a href="#" class="block px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50">Apps</a>
-            <a href="#" class="block px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50">Pricing</a>
-            <a href="#" class="block px-4 py-2.5 rounded-lg text-sm text-zinc-500 hover:bg-zinc-50">About</a>
-            <button
-                class="flex items-center justify-center gap-2.5 bg-linear-to-r from-zinc-950 to-zinc-500 text-zinc-50 text-sm font-medium px-5 py-2.5 rounded-full cursor-pointer border-0 mt-3 w-fit">
-                Get started
-                <span class="w-7 h-7 rounded-full bg-white flex items-center justify-center">
-                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M.6 4.602h10m-4-4 4 4-4 4" stroke="#3f3f47" stroke-width="1.2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </span>
-            </button>
+        <div v-if="isMobileMenuOpen" id="mobileMenu"
+            class="absolute left-0 top-full z-50 flex w-full flex-col gap-1 border-t border-default bg-default p-5 shadow-lg md:hidden">
+            <NuxtLink to="/catalog"
+                class="rounded-lg px-4 py-2.5 text-sm font-medium text-default no-underline hover:bg-elevated"
+                @click="isMobileMenuOpen = false">Products</NuxtLink>
+            <NuxtLink to="#" class="rounded-lg px-4 py-2.5 text-sm text-muted no-underline hover:bg-elevated"
+                @click="isMobileMenuOpen = false">Services</NuxtLink>
+            <NuxtLink to="#" class="rounded-lg px-4 py-2.5 text-sm text-muted no-underline hover:bg-elevated"
+                @click="isMobileMenuOpen = false">Apps</NuxtLink>
+            <NuxtLink to="#" class="rounded-lg px-4 py-2.5 text-sm text-muted no-underline hover:bg-elevated"
+                @click="isMobileMenuOpen = false">Pricing</NuxtLink>
+            <NuxtLink to="#" class="rounded-lg px-4 py-2.5 text-sm text-muted no-underline hover:bg-elevated"
+                @click="isMobileMenuOpen = false">About</NuxtLink>
+            <UButton class="mt-3 w-fit rounded-full" @click="toggleColorMode">
+                <Icon :name="colorModeIcon" aria-hidden="true" />
+                {{ isDark ? 'Light mode' : 'Dark mode' }}
+            </UButton>
         </div>
     </nav>
 

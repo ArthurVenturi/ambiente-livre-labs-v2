@@ -1,10 +1,90 @@
 @import "tailwindcss";
+@import "@nuxt/ui";
 
+@custom-variant dark (&:where(.dark, .dark *));
 
-/* button{
-
+@theme {
+  --color-labs-cyan: #00bdeb;
+  --color-labs-blue: #078deb;
+  --color-labs-navy: #0b1b2b;
+  --color-labs-midnight: #07111d;
+  --color-labs-slate: #596675;
+  --color-labs-surface: #ffffff;
+  --color-labs-off-white: #f5f7fa;
+  --color-labs-line: #d8e0e8;
+  --color-data-driven-default: #E64D00;
+  --color-help-desk-default: #6B6B6B;
+  --color-ecm-bpm-default: #3D9900;
+  --color-devops-default: #005CA8;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-a {
-    @apply hover:bg-gray-300 hover:transition-colors hover:duration-300;
-} */
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-labs-off-white font-sans text-labs-navy antialiased;
+  }
+
+  a {
+    @apply transition-colors duration-150;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  button:not([class]) {
+    @apply rounded-lg border border-labs-line bg-white px-2 py-2 text-sm font-medium text-labs-navy shadow-sm transition hover:border-labs-blue hover:text-labs-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-labs-blue;
+  }
+
+  a:not([class]) {
+    @apply text-labs-blue underline-offset-4 hover:text-labs-cyan hover:underline;
+  }
+
+  kbd {
+    @apply rounded border border-labs-line bg-white px-1.5 py-0.5 font-mono text-[10px] text-labs-slate shadow-sm;
+  }
+
+  mark {
+    @apply rounded bg-labs-blue/15 px-1 text-labs-navy;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply outline-none;
+  }
+
+  ::selection {
+    @apply bg-labs-blue/20 text-labs-navy;
+  }
+}
+
+@layer components {
+  .labs-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-labs-line bg-white px-3 py-2 text-xs font-semibold text-labs-navy shadow-sm transition hover:border-labs-blue hover:text-labs-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-labs-blue;
+  }
+
+  .labs-tag {
+    @apply inline-flex items-center gap-1 rounded-md border border-labs-line bg-white px-2 py-1 text-[10px] font-medium text-labs-slate;
+  }
+
+  .labs-link {
+    @apply text-labs-blue hover:text-labs-cyan;
+  }
+
+  .labs-panel {
+    @apply rounded-xl border border-labs-line bg-white shadow-sm;
+  }
+}
+
+.dark body {
+  @apply bg-labs-midnight text-white;
+}

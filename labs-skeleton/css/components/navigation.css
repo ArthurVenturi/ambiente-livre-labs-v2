@@ -1,0 +1,33 @@
+.primary-navigation,
+.footer-navigation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.primary-navigation {
+  min-width: 0;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.primary-navigation a,
+.footer-navigation a {
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+}
+
+.primary-navigation a:hover,
+.primary-navigation a[aria-current="page"],
+.footer-navigation a:hover {
+  color: var(--color-accent);
+}
+
+@media (max-width: 48rem) {
+  .primary-navigation,
+  .footer-navigation {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: var(--space-3);
+  }
+}

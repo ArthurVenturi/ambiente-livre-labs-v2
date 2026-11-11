@@ -6,10 +6,12 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/fonts',
     '@nuxt/icon/module',
+    '@nuxt/image',
   ],
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   compatibilityDate: '2024-04-03',
   studio: {
+    route: '/_studio',
     repository: {
       provider: 'github', // 'github' or 'gitlab', default: 'github'
       owner: 'ambientelivre', // your GitHub/GitLab username or organization

@@ -1,0 +1,84 @@
+:root {
+  color-scheme: dark;
+
+  /* Brand palette */
+  --color-cyan: #00BDEB;
+  --color-blue: #078DEB;
+  --color-navy: #0B1B2B;
+  --color-midnight: #07111D;
+  --color-silver: #9AA3AD;
+  --color-slate: #596675;
+  --color-white: #FFFFFF;
+  --color-off-white: #F5F7FA;
+
+  /* Semantic tokens: dark theme */
+  --color-bg: var(--color-midnight);
+  --color-surface: var(--color-navy);
+  --color-surface-raised: #10263A;
+  --color-text: var(--color-white);
+  --color-text-muted: var(--color-silver);
+  --color-border: #24384A;
+  --color-accent: var(--color-cyan);
+  --color-accent-hover: var(--color-blue);
+  --color-focus-ring: var(--color-cyan);
+
+  /* Typography */
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-icons: "Material Symbols Outlined";
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --line-height-base: 1.5;
+  --line-height-tight: 1.25;
+
+  /* Spacing scale (0.25rem base) */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Shape, depth and motion */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.25rem;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.16);
+  --shadow-md: 0 8px 24px rgb(0 0 0 / 0.2);
+  --transition-fast: 140ms ease;
+  --transition-base: 220ms ease;
+
+  /* Layout */
+  --container-width: 80rem;
+  --container-gutter: clamp(1rem, 4vw, 2rem);
+  --header-height: 4.5rem;
+  --footer-min-height: 5rem;
+  --z-header: 100;
+  --z-overlay: 500;
+  --z-modal: 1000;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: var(--color-off-white);
+  --color-surface: var(--color-white);
+  --color-surface-raised: #EAF0F5;
+  --color-text: var(--color-navy);
+  --color-text-muted: var(--color-slate);
+  --color-border: #D8E0E8;
+  --color-accent: #008FB8;
+  --color-accent-hover: var(--color-blue);
+  --color-focus-ring: #008FB8;
+  --shadow-sm: 0 1px 2px rgb(11 27 43 / 0.08);
+  --shadow-md: 0 8px 24px rgb(11 27 43 / 0.1);
+}

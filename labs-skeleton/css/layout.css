@@ -1,0 +1,25 @@
+#main-content {
+  min-width: 0;
+}
+
+.site-shell {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.container {
+  width: min(100% - (var(--container-gutter) * 2), var(--container-width));
+  margin-inline: auto;
+}
+
+.main-content {
+  flex: 1 0 auto;
+  padding-block: var(--space-8);
+}
+
+@media (max-width: 48rem) {
+  .main-content {
+    padding-block: var(--space-6);
+  }
+}

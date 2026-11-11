@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#07111D" />
+  <title>Ambiente Livre Labs</title>
+
+  <!-- Google Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+
+  <!-- CSS is split by responsibility / element family. -->
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/reset.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/components/header.css" />
+  <link rel="stylesheet" href="./css/components/navigation.css" />
+  <link rel="stylesheet" href="./css/components/footer.css" />
+  <link rel="stylesheet" href="./css/components/buttons.css" />
+  <link rel="stylesheet" href="./css/components/forms.css" />
+  <link rel="stylesheet" href="./css/components/cards.css" />
+  <link rel="stylesheet" href="./css/utilities.css" />
+  <link rel="stylesheet" href="./css/catalog.css" />
+
+</head>
+
+<body>
+  <div class="site-shell" data-site-shell>
+    <nav class="site-header header" aria-label="Main navigation">
+
+      <!-- Logo -->
+      <a class="header__logo" href="/" aria-label="Home">
+        <img src="./assets/Ambiente Livre Labs Logo.png" class="header__logo-img" alt="Ambiente Livre Labs" />
+      </a>
+
+      <!-- Desktop navigation -->
+      <div class="header__nav" aria-label="Main menu">
+        <a href="#" class="header__link header__link--active" aria-current="page">Products</a>
+        <a href="#" class="header__link">Services</a>
+        <a href="#" class="header__link">Apps</a>
+        <a href="#" class="header__link">Pricing</a>
+        <a href="#" class="header__link">Company</a>
+      </div>
+
+      <!-- Desktop CTA -->
+      <a class="header__cta header__cta--desktop" href="#">
+        <span>Submit</span>
+        <span class="header__cta-icon" aria-hidden="true">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M.6 4.602h10m-4-4 4 4-4 4" stroke="#3f3f47" stroke-width="1.2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </span>
+      </a>
+
+      <!-- Mobile hamburger -->
+      <button class="header__hamburger" id="hamburger" type="button" aria-label="Open navigation menu"
+        aria-controls="mobileMenu" aria-expanded="false">
+        <span class="header__bar header__bar--one"></span>
+        <span class="header__bar header__bar--two"></span>
+        <span class="header__bar header__bar--three"></span>
+      </button>
+
+      <!-- Mobile navigation -->
+      <div class="header__mobile-menu" id="mobileMenu" hidden>
+        <a href="#" class="header__mobile-link header__mobile-link--active" aria-current="page">Products</a>
+        <a href="#" class="header__mobile-link">Services</a>
+        <a href="#" class="header__mobile-link">Apps</a>
+        <a href="#" class="header__mobile-link">Pricing</a>
+        <a href="#" class="header__mobile-link">About</a>
+
+        <a class="header__cta header__cta--mobile" href="#">
+          <span>Get started</span>
+          <span class="header__cta-icon" aria-hidden="true">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M.6 4.602h10m-4-4 4 4-4 4" stroke="#3f3f47" stroke-width="1.2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
+      </div>
+
+    </nav>
+
+    <main class="main-content" id="main-content" tabindex="-1">
+      <div class="container" data-main-content>
+        <section class="intro">
+          <div class="intro-row">
+            <div>
+              <h1>Browse <span>plugins</span></h1>
+            </div>
+          </div>
+        </section>
+
+        <section class="search-area" aria-label="Search and quick category filters">
+          <form class="search-form" id="searchForm" role="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10.8" cy="10.8" r="6.8" />
+              <path d="m16 16 4.5 4.5" />
+            </svg>
+            <label class="sr-only" for="searchInput">Search plugins</label>
+            <input id="searchInput" type="search" placeholder="Search plugins, vendors, capabilities..."
+              autocomplete="off">
+            <button class="search-submit" type="submit">Search</button>
+          </form>
+          <div class="quick-filters" id="quickFilters" aria-label="Quick category filters">
+            <!-- <span class="quick-label">Quick filters</span> -->
+            <button class="quick-chip is-active" type="button" data-category="all">All plugins</button>
+            <button class="quick-chip" type="button" data-category="CRM">CRM</button>
+            <button class="quick-chip" type="button" data-category="CMS">CMS</button>
+            <button class="quick-chip" type="button" data-category="ITSM">ITSM</button>
+            <button class="quick-chip" type="button" data-category="ECM">ECM</button>
+            <button class="quick-chip" type="button" data-category="BPMN">BPMN</button>
+            <button class="quick-chip" type="button" data-category="DevOps">DevOps</button>
+            <button class="quick-chip" type="button" data-category="IAC">IAC</button>
+          </div>
+        </section>
+
+        <section class="catalog-layout" aria-label="Plugin catalog">
+          <aside class="filter-sidebar" id="filterSidebar">
+            <div class="filter-heading">
+              <h2>Filters</h2>
+              <button id="clearFilters" class="text-button" type="button">Clear all</button>
+            </div>
+            <div class="filter-group">
+              <h3>Type</h3>
+              <label class="filter-option"><input type="checkbox" name="type" value="Starter"><span>Starters</span><span
+                  class="filter-count" data-count-type="Starter">0</span></label>
+              <label class="filter-option"><input type="checkbox" name="type"
+                  value="Integration"><span>Integrations</span><span class="filter-count"
+                  data-count-type="Integration">0</span></label>
+              <label class="filter-option"><input type="checkbox" name="type"
+                  value="Extension"><span>Extensions</span><span class="filter-count"
+                  data-count-type="Extension">0</span></label>
+              <label class="filter-option"><input type="checkbox" name="type"
+                  value="Template"><span>Templates</span><span class="filter-count"
+                  data-count-type="Template">0</span></label>
+            </div>
+            <div class="filter-group" id="categories">
+              <h3>Category</h3>
+              <div id="categoryFilters"></div>
+            </div>
+            <div class="filter-group">
+              <h3>Availability</h3>
+              <label class="filter-option"><input type="checkbox" id="openSourceOnly"><span>Open source</span></label>
+              <label class="filter-option"><input type="checkbox" id="featuredOnly"><span>Featured
+                  plugins</span></label>
+            </div>
+            <div class="sidebar-note">
+              <span class="note-icon" aria-hidden="true">✳</span>
+              <strong>Built something useful?</strong>
+              <p>Help the community discover your plugin.</p>
+              <a href="#submit">Submit a plugin <span aria-hidden="true">→</span></a>
+            </div>
+          </aside>
+
+          <div class="results">
+            <div class="results-toolbar">
+              <div>
+                <div class="intro-stat"><span id="totalCount">0</span><span>results</span></div>
+                <!-- <button class="quick-chip is-active" type="button" data-category="all">All plugins</button>
+                <button class="quick-chip" type="button" data-category="CRM">CRM</button>
+                <button class="quick-chip" type="button" data-category="CMS">CMS</button>
+                <button class="quick-chip" type="button" data-category="ITSM">ITSM</button>
+                <button class="quick-chip" type="button" data-category="ECM">ECM</button>
+                <button class="quick-chip" type="button" data-category="BPMN">BPMN</button>
+                <button class="quick-chip" type="button" data-category="DevOps">DevOps</button>
+                <button class="quick-chip" type="button" data-category="IAC">IAC</button> -->
+              </div>
+              <div class="sort-control">
+                <label for="sortSelect">Sort by</label>
+                <select id="sortSelect">
+                  <option value="recommended">Recommended</option>
+                  <option value="name-asc">Name: A–Z</option>
+                  <option value="name-desc">Name: Z–A</option>
+                  <option value="category">Category</option>
+                  <option value="publisher">Publisher</option>
+                </select>
+              </div>
+            </div>
+            <div class="active-filters" id="activeFilters" aria-live="polite"></div>
+
+
+            <div class="plugin-grid" id="pluginGrid" aria-live="polite">
+              <template id="pluginCardTemplate">
+                <article class="plugin-card">
+                  <div class="plugin-card__header">
+                    <div class="plugin-card__identity">
+                      <div class="plugin-card__logo">
+                        <img class="plugin-card__logo-image" src="" alt="" loading="lazy">
+                        <span class="plugin-card__logo-fallback" aria-hidden="true"></span>
+                      </div>
+
+                      <div class="plugin-card__title-wrap">
+                        <h3 class="plugin-card__title"></h3>
+                        <p class="plugin-card__publisher"></p>
+                      </div>
+                    </div>
+
+                    <span class="plugin-card__type"></span>
+                  </div>
+
+                  <p class="plugin-card__description"></p>
+
+                  <div class="plugin-card__footer">
+                    <div class="plugin-card__tags" aria-label="Plugin categories"></div>
+                    <a class="plugin-card__open" href="#" aria-label="View plugin details">
+                      <span class="material-symbols-outlined" aria-hidden="true">
+                        arrow_outward
+                      </span>
+                    </a>
+                  </div>
+                </article>
+              </template>
+            </div>
+
+
+
+            <div class="empty-state" id="emptyState" hidden>
+              <span class="empty-icon" aria-hidden="true">⌕</span>
+              <h3>No plugins found</h3>
+              <p>Try another search or remove one of your filters.</p>
+              <button type="button" class="button-secondary" id="emptyClear">Clear filters</button>
+            </div>
+            <div class="catalog-footer"><span id="footerCount"></span><button id="loadMore" class="button-secondary"
+                type="button" hidden>Show more plugins <span aria-hidden="true">↓</span></button></div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <footer class="site-footer footer">
+      <div class="footer__inner container">
+        <div class="footer__brand">
+          <p class="footer__copyright">
+            Copyright © Ambiente Livre <span>Labs</span>
+            <span data-current-year></span> - All rights reserved
+          </p>
+        </div>
+
+        <nav class="footer__socials" aria-label="Social media">
+          <a class="footer__social-link" href="https://twitter.com/" aria-label="Twitter" target="_blank"
+            rel="noopener noreferrer">
+            <svg class="footer__social-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+            </svg>
+          </a>
+
+          <a class="footer__social-link" href="https://www.youtube.com/" aria-label="YouTube" target="_blank"
+            rel="noopener noreferrer">
+            <svg class="footer__social-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+            </svg>
+          </a>
+
+          <a class="footer__social-link" href="https://www.facebook.com/" aria-label="Facebook" target="_blank"
+            rel="noopener noreferrer">
+            <svg class="footer__social-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+            </svg>
+          </a>
+
+          <a class="footer__social-link" href="https://www.linkedin.com/" aria-label="LinkedIn" target="_blank"
+            rel="noopener noreferrer">
+            <svg class="footer__social-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+</body>
+
+<script type="module" src="./js/catalog.js"></script>
+
+</html>
