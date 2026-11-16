@@ -1,22 +1,19 @@
 <script setup lang="ts">
 interface Plugin {
-  path?: string
+  path: string
   title: string
-  publisher: string
-  license?: string
   description: string
+  type: string
+  software: string[]
+  version: string
+  publisher: string
+  license: string
   logo?: string
   initials?: string
   categories: string[]
-  type: 'Starter' | 'Integration' | 'Extension' | 'Template'
   featured: boolean
   openSource: boolean
   verified: boolean
-  install?: {
-    packageManager?: string
-    command?: string
-    requirements?: string[]
-  }
 }
 
 const { data: content } = await useAsyncData('plugin-catalog', () =>
@@ -34,45 +31,33 @@ const sortBy = ref('recommended')
 const filtersOpen = ref(false)
 const page = ref(1)
 const pageSize = 6
-const typeOptions = ['Starter', 'Integration', 'Extension', 'Template']
-const publisherOptions = computed(() => [...new Set(plugins.value.map(plugin => plugin.publisher))].sort())
-const licenseOptions = computed(() => [...new Set(plugins.value.map(plugin => plugin.license || 'Not specified'))].sort())
-const typeFilterItems = computed(() => typeOptions.map(type => ({
-  label: `${type}s`,
-  value: type,
-  description: `${typeCounts.value[type] || 0} plugins`,
-})))
-const publisherFilterItems = computed(() => publisherOptions.value.map(publisher => ({
-  label: publisher,
-  value: publisher,
-  description: `${publisherCounts.value[publisher] || 0} plugins`,
-})))
-const licenseFilterItems = computed(() => licenseOptions.value.map(license => ({
-  label: license,
-  value: license,
-  description: `${licenseCounts.value[license] || 0} plugins`,
-})))
 
-const publisherCounts = computed(() =>
-  Object.fromEntries(publisherOptions.value.map(publisher => [
-    publisher,
-    plugins.value.filter(plugin => plugin.publisher === publisher).length,
-  ])),
-)
+function useFacet(get: (plugin: Plugin) => string, format: (value: string) => string = value => value) {
+  const options = computed(() =>
+    [...new Set(plugins.value.map(get))].sort((a, b) => a.localeCompare(b)),
+  )
+  const counts = computed(() =>
+    plugins.value.reduce<Record<string, number>>((acc, plugin) => {
+      const key = get(plugin)
+      acc[key] = (acc[key] ?? 0) + 1
+      return acc
+    }, {}),
+  )
+  const items = computed(() =>
+    options.value.map(value => ({
+      label: format(value),
+      value,
+      description: `${counts.value[value] ?? 0} plugins`,
+    })),
+  )
+  return { options, counts, items }
+}
 
-const licenseCounts = computed(() =>
-  Object.fromEntries(licenseOptions.value.map(license => [
-    license,
-    plugins.value.filter(plugin => (plugin.license || 'Not specified') === license).length,
-  ])),
-)
+const plural = (value: string) => `${value.charAt(0).toUpperCase()}${value.slice(1)}s`
 
-const typeCounts = computed(() =>
-  Object.fromEntries(typeOptions.map(type => [
-    type,
-    plugins.value.filter(plugin => plugin.type === type).length,
-  ])),
-)
+const { items: typeFilterItems } = useFacet(plugin => plugin.type, plural)
+const { items: publisherFilterItems } = useFacet(plugin => plugin.publisher)
+const { items: licenseFilterItems } = useFacet(plugin => plugin.license)
 
 const filteredPlugins = computed(() => {
   const query = search.value.trim().toLowerCase()
@@ -81,7 +66,7 @@ const filteredPlugins = computed(() => {
     return (!query || searchable.includes(query))
       && (!selectedTypes.value.length || selectedTypes.value.includes(plugin.type))
       && (!selectedPublishers.value.length || selectedPublishers.value.includes(plugin.publisher))
-      && (!selectedLicenses.value.length || selectedLicenses.value.includes(plugin.license || 'Not specified'))
+      && (!selectedLicenses.value.length || selectedLicenses.value.includes(plugin.license))
   })
 
   return [...result].sort((a, b) => {

@@ -12,7 +12,7 @@ const socials = [
 
 <template>
   <footer class="flex flex-col gap-6 px-6 py-5 text-zinc-900 transition-colors duration-300 sm:px-12 lg:px-24">
-    <!-- Row 1: custom logo text -->
+    <USeparator class="w-full" />
     <p
       class="text-5xl font-extrabold leading-none text-transparent sm:text-7xl lg:text-8xl"
       style="-webkit-text-stroke: 2px black;"
@@ -21,7 +21,7 @@ const socials = [
     </p>
 
     <div class="flex flex-wrap items-center justify-between gap-4">
-      <p class="dark:text-labs-off-white">Copyright {{ currentYear }} © Ambiente Livre Labs</p>
+      <p class="dark:text-labs-slate">Copyright {{ currentYear }} © Ambiente Livre Labs</p>
 
       <nav class="inline-flex items-center gap-4">
         <a

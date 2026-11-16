@@ -1,29 +1,29 @@
 ---
-kind: plugin
 title: Alfresco ECM Extensions
-publisher: Ambiente Livre Labs
-license: Apache-2.0
-description: Reusable extensions for Alfresco Content Services, including document lifecycle integration, metadata handling and enterprise content workflows.
-initials: AL
 categories:
   - ECM
-type: Extension
-openSource: true
-verified: true
+description: Reusable extensions for Alfresco Content Services, including document lifecycle integration, metadata handling and enterprise content workflows.
 featured: true
+initials: AL
 install:
   packageManager: npm
   command: npm install @ambientelivre/alfresco-ecm
   requirements:
     - Node.js 20 or newer
     - Alfresco Content Services 7 or newer
+kind: plugin
+license: Apache-2.0
+openSource: true
+publisher: Ambiente Livre Labs
+type: Extension
+verified: true
 ---
 
 Extend document lifecycle and metadata workflows in Alfresco Content Services.
 
 ## Overview
 
-Alfresco ECM Extensions is a set of reusable modules that plug into Alfresco Content Services and cover the most common enterprise content scenarios.
+Alfresco ECM Extensions is a set of reusable modules that plug into reflex into all Alfresco Content Services and cover the most common enterprise content scenarios.
 
 ### Features
 
@@ -34,11 +34,11 @@ Alfresco ECM Extensions is a set of reusable modules that plug into Alfresco Con
 
 ### Use cases
 
-| Scenario | What the plugin does |
-| --- | --- |
-| Contract management | Tracks status and expiry metadata |
-| Compliance | Enforces retention and archive rules |
-| Integrations | Exposes document events to other systems |
+| Scenario            | What the plugin does                     |
+| ------------------- | ---------------------------------------- |
+| Contract management | Tracks status and expiry metadata        |
+| Compliance          | Enforces retention and archive rules     |
+| Integrations        | Exposes document events to other systems |
 
 > This plugin is open source and maintained by Ambiente Livre Labs.
 
@@ -74,14 +74,20 @@ export default defineConfig({
 
 ### v1.2.1
 
+2026-02-10
+
 - Fixed metadata validation for nullable fields
 - Updated dependencies
 
 ### v1.2.0
 
+2025-11-03
+
 - Added approval workflow support
 - Added REST endpoints for document events
 
 ### v1.0.0
+
+2024-11-20
 
 - Initial release

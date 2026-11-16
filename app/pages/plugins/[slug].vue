@@ -7,12 +7,12 @@ const items = ref<TabsItem[]>([
   { label: 'Installation', value: 'installation', icon: 'line-md:cog-loop' },
   { label: 'Changelog', value: 'changelog', icon: 'line-md:backup-restore' },
 ])
-const activeTab = ref('overview')
+const activeTab = ref<PluginTab>('overview')
 
 const route = useRoute()
 const slug = route.params.slug as string
 
-// Main markdown: content/plugins/<slug>.md  (Overview tab)
+// Single markdown: content/plugins/<slug>.md  (Overview + Installation + Changelog)
 const { data: plugin } = await useAsyncData(`plugin-${slug}`, () =>
   queryCollection('content').path(`/plugins/${slug}`).first(),
 )
@@ -21,29 +21,16 @@ if (!plugin.value) {
   throw createError({ statusCode: 404, statusMessage: 'Plugin not found', fatal: true })
 }
 
-// Optional markdown: content/plugins/<slug>/changelog.md  (Changelog tab)
-const { data: changelog } = await useAsyncData(`plugin-${slug}-changelog`, () =>
-  queryCollection('content').path(`/plugins/${slug}/changelog`).first(),
-)
-
 const pluginData = computed(() => plugin.value!)
-
-// The TOC follows the active tab, using the headings Nuxt Content extracted
-const tocLinks = computed(() => {
-  if (activeTab.value === 'changelog') return []
-  return plugin.value?.body?.toc?.links?.find(l => l.id === activeTab.value)?.children ?? []
-})
-
-const copied = ref(false)
 const logoFailed = ref(false)
 
-async function copyInstallCommand() {
-  const command = pluginData.value.install?.command
-  if (!command) return
-  await navigator.clipboard.writeText(command)
-  copied.value = true
-  window.setTimeout(() => (copied.value = false), 1800)
-}
+// Body split into the three tabs
+const sections = computed(() => splitPluginBody((plugin.value?.body?.value ?? []) as any[]))
+
+// TOC = the "###" headings under the active tab's "##"
+const tocLinks = computed(() =>
+  plugin.value?.body?.toc?.links?.find(l => l.id === activeTab.value)?.children ?? [],
+)
 
 useSeoMeta({
   title: () => `${pluginData.value.title} | Ambiente Livre Labs`,
@@ -66,16 +53,18 @@ useSeoMeta({
           </div>
           <div class="grid grid-rows-3">
             <div class="inline-flex items-center text-xs py-1 gap-1">
-              <Icon  name="material-symbols:extension-outline" mode="svg" size="16" class="shrink-0 text-zinc-400" /> 
-              <Icon v-if="pluginData.type === 'integration'" name="line-md:arrows-horizontal-alt" mode="svg" size="16" class="shrink-0 text-zinc-400" />
+              <Icon name="material-symbols:extension-outline" mode="svg" size="16" class="shrink-0 text-zinc-400" />
+              <Icon v-if="pluginData.type?.toLowerCase() === 'integration'" name="line-md:arrows-horizontal-alt"
+                mode="svg" size="16" class="shrink-0 text-zinc-400" />
               <span class="p-1">{{ pluginData.type }}</span>
               <Icon v-if="pluginData.openSource" name="boxicons:community" mode="svg" size="16"
                 class="shrink-0 text-zinc-400" />
-              <Icon v-else="pluginData.openSource" name="line-md:security-twotone" mode="svg" size="16"
-                class="shrink-0 text-zinc-400" />
+              <Icon v-else name="line-md:security-twotone" mode="svg" size="16" class="shrink-0 text-zinc-400" />
               <span class="p-1">{{ pluginData.openSource ? 'Community' : 'Enterprise' }}</span>
-              <Icon v-if="pluginData.verified" name="line-md:confirm-circle" mode="svg" size="16" class="shrink-0 text-zinc-400" />
-              <span v-if="pluginData.verified" class="p-1">Verified</span>
+              <template v-if="pluginData.verified">
+                <Icon name="line-md:confirm-circle" mode="svg" size="16" class="shrink-0 text-zinc-400" />
+                <span class="p-1">Verified</span>
+              </template>
             </div>
             <h1 class="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white">
               {{ pluginData.title }}
@@ -84,9 +73,8 @@ useSeoMeta({
               <Icon name="line-md:star-alt-twotone-right-half" mode="svg" size="1.2rem"
                 class="shrink-0 text-zinc-400" />
               <span class="p-0.5">98 stars</span>
-              <span class="inline-block size-1 rounded-full bg-zinc-400 mx-1"></span>
-              <Icon name="boxicons:price-tag-alt" mode="svg" size="16"
-                class="shrink-0 text-zinc-400" />
+              <span class="inline-block size-1 rounded-full bg-zinc-400 mx-1" />
+              <Icon name="boxicons:price-tag-alt" mode="svg" size="16" class="shrink-0 text-zinc-400" />
               <span class="p-0.5">v1.2.1</span>
               <span class="p-1">|</span>
               <ULink to="#" class="hover:-translate-y-1 hover:scale-110 transition-all duration-300">
@@ -105,42 +93,16 @@ useSeoMeta({
       </div>
 
       <div class="grid grid-cols-[minmax(0,1fr)_16rem] gap-8">
-        <!-- Tabs -->
+        <!-- Tabs: every tab comes from the same markdown -->
         <UTabs v-model="activeTab" color="neutral" variant="link" :content="true" :items="items" class="w-full">
           <template #content="{ item }">
             <div class="p-4">
-              <!-- Overview: the markdown body, rendered as-is -->
-              <ContentRenderer v-if="item.value === 'overview'" :value="plugin!" />
+              <PluginChangelog v-if="item.value === 'changelog'" :nodes="sections.changelog" :doc="plugin!" />
 
-              <!-- Installation: built from frontmatter -->
-              <div v-else-if="item.value === 'installation'" class="space-y-6">
-                <template v-if="pluginData.install">
-                  <section v-if="pluginData.install.command">
-                    <h2 id="install" class="mb-2 text-lg font-semibold text-zinc-900 dark:text-white">Install</h2>
-                    <div
-                      class="flex items-center justify-between gap-3 rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900">
-                      <code class="text-sm">{{ pluginData.install.command }}</code>
-                      <UButton size="xs" color="neutral" variant="ghost"
-                        :icon="copied ? 'i-lucide-check' : 'i-lucide-copy'" @click="copyInstallCommand" />
-                    </div>
-                  </section>
+              <ContentRenderer v-else-if="sections[item.value as PluginTab].length"
+                :value="toDoc(plugin, sections[item.value as PluginTab])" />
 
-                  <section v-if="pluginData.install.requirements?.length">
-                    <h2 id="requirements" class="mb-2 text-lg font-semibold text-zinc-900 dark:text-white">Requirements
-                    </h2>
-                    <ul class="list-disc space-y-1 pl-5 text-sm text-zinc-600 dark:text-zinc-400">
-                      <li v-for="req in pluginData.install.requirements" :key="req">{{ req }}</li>
-                    </ul>
-                  </section>
-                </template>
-                <p v-else class="text-sm text-zinc-500">No installation details provided.</p>
-              </div>
-
-              <!-- Changelog: separate markdown, optional -->
-              <template v-else-if="item.value === 'changelog'">
-                <ContentRenderer v-if="changelog" :value="changelog" />
-                <p v-else class="text-sm text-zinc-500">No changelog yet.</p>
-              </template>
+              <p v-else class="text-sm text-zinc-500">Nothing here yet.</p>
             </div>
           </template>
         </UTabs>
@@ -172,7 +134,6 @@ useSeoMeta({
             <AvatarGroup />
           </div>
         </aside>
-
       </div>
     </div>
   </main>

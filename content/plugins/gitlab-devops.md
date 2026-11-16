@@ -1,21 +1,22 @@
 ---
-kind: plugin
 title: GitLab DevOps Templates
-publisher: Ambiente Livre Labs
-license: Apache-2.0
-description: Reusable CI/CD pipeline templates and automation patterns for building, testing and deploying applications with GitLab.
-initials: GL
 categories:
   - DevOps
-type: Template
-openSource: true
+description: Reusable CI/CD pipeline templates and automation patterns for building, testing and deploying applications with GitLab.
 featured: true
+initials: GL
 install:
   packageManager: GitLab CI
   command: curl -fsSL https://labs.ambientelivre.com/gitlab-devops/install.sh | sh
   requirements:
     - A GitLab project with CI enabled
     - Runner access with Docker support
+kind: plugin
+license: Apache-2.0
+openSource: true
+publisher: Ambiente Livre Labs
+type: Template
+verified: false
 ---
 
 # GitLab DevOps Templates
