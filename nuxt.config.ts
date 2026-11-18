@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/icon/module',
     '@nuxt/image',
+    'nuxt-webhook-validators'
   ],
   devtools: { enabled: false },
   compatibilityDate: '2024-04-03',
@@ -22,6 +23,13 @@ export default defineNuxtConfig({
   css: [
     '~/assets/css/app.css',
   ],
+  runtimeConfig:{
+    webhook: {
+      github: {
+        secretKey: import.meta.env.GITHUB_WEBHOOK_SECRET_KEY,
+      }
+    }
+  },
   vite: {
     optimizeDeps: {
       include: [

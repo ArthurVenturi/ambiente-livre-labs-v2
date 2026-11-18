@@ -1,19 +1,28 @@
 <script setup lang="ts">
 interface Plugin {
+  kind: string
   path: string
   title: string
   description: string
   type: string
   software: string[]
-  version: string
+  version?: string
   publisher: string
   license: string
   logo?: string
   initials?: string
+  downloadUrl: string
   categories: string[]
+  keywords: string[]
   featured: boolean
   openSource: boolean
   verified: boolean
+  github?: {
+    stars: number
+    license: string | null
+    release: { tag: string } | null
+    contributorCount: number
+  } | null
 }
 
 const { data: content } = await useAsyncData('plugin-catalog', () =>
@@ -125,8 +134,7 @@ useSeoMeta({
   <main class="w-full px-0">
     <div class="mx-auto grid w-[min(1320px,calc(100%-4rem))] grid-cols-1 gap-y-7 pb-12 lg:grid-cols-[228px_minmax(0,1fr)] lg:gap-x-8">
       <section class="max-w-175 md:px-0 lg:col-span-2 lg:col-start-2">
-        <h1 class="mt-3 text-4xl font-semibold tracking-[-0.07em] text-zinc-900 dark:text-white md:text-5xl">Browse the
-          open source
+        <h1 class="mt-3 text-4xl font-semibold tracking-[-0.07em] text-zinc-900 dark:text-white md:text-5xl">Browse
           <span class="text-sky-600">plugins</span>
         </h1>
       </section>

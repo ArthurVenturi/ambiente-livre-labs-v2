@@ -4,6 +4,8 @@
 .nuxt
 .data
 
+labs-skeleton
+
 # dependencies
 /node_modules
 /.pnp

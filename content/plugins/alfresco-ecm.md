@@ -17,6 +17,27 @@ openSource: true
 publisher: Ambiente Livre Labs
 type: Extension
 verified: true
+keywords: 
+  - Autentication
+github:
+  stars: 98
+  license: Apache-2.0
+  contributorCount: 1
+  downloadUrl: https://github.com/ambientelivre/alfresco-ecm
+  createdAt: 2024-11-20T10:12:00Z
+  updatedAt: 2026-10-28T14:03:11Z
+  htmlUrl: https://github.com/ambientelivre/alfresco-ecm
+  owner:
+    login: ambientelivre
+    avatarUrl: https://avatars.githubusercontent.com/u/12345?v=4
+  release:
+    tag: v1.2.1
+    publishedAt: 2026-02-10T09:00:00Z
+    url: https://github.com/ambientelivre/alfresco-ecm/releases/tag/v1.2.1
+  contributors:
+    - login: miguel
+      avatarUrl: https://avatars.githubusercontent.com/u/97977665?v=4
+      url: https://github.com/miguel
 ---
 
 Extend document lifecycle and metadata workflows in Alfresco Content Services.

@@ -30,15 +30,15 @@ const pluginUrl = computed(() => {
 <template>
   <NuxtLink :to="pluginUrl" class="block">
   <UCard
-    class="h-full rounded-xl border-labs-line border bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-labs-blue/30 hover:shadow-md dark:border-zinc-700 dark:bg-labs-navy cursor-pointer relative overflow-hidden">
+    class="h-full rounded-xl border-labs-line border bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-labs-blue/50 hover:shadow-md dark:border-zinc-700 dark:bg-labs-navy cursor-pointer relative overflow-hidden">
     <canvas v-if="plugin.type"
-      class="absolute -bottom-8 -right-8 size-28 rounded-full bg-labs-blue/10 pointer-events-none"
+      class="absolute -bottom-8 -right-8 size-28 rounded-full bg-labs-blue/20 pointer-events-none"
       aria-hidden="true"></canvas>
     <div class="flex min-h-32 flex-col relative z-10">
       <div class="flex items-start justify-between gap-3">
         <div class="flex min-w-0 items-center gap-3">
           <div
-            class="grid size-11 shrink-0 place-items-center overflow-hidden rounded-xl border border-labs-blue/20 bg-labs-blue/5 text-xs font-bold text-labs-blue">
+            class="grid size-11 shrink-0 place-items-center overflow-hidden rounded-xl border border-labs-blue/50 bg-labs-blue/5 text-xs font-bold text-labs-blue">
             <NuxtImg v-if="plugin.logo && !logoFailed" :src="plugin.logo" :alt="`${plugin.title} logo`" loading="lazy"
               @error="logoFailed = true" />
             <span v-else aria-hidden="true">{{ pluginInitials }}</span>

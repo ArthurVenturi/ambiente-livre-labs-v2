@@ -42,7 +42,7 @@ const serviceItems = [[
             <UDropdownMenu :items="serviceItems" :content="{ align: 'start' }">
                 <UButton color="neutral" variant="ghost" trailing-icon="line-md:chevron-down">Services</UButton>
             </UDropdownMenu>
-            <NuxtLink v-for="label in ['Apps', 'Pricing', 'About']" :key="label" to="#"
+            <NuxtLink v-for="label in ['Apps', 'Pricing', 'Talks']" :key="label" to="/talks"
                 class="rounded-full px-3 py-2 text-sm text-default no-underline hover:bg-elevated">{{ label }}
             </NuxtLink>
         </div>

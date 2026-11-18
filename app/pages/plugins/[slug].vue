@@ -72,21 +72,23 @@ useSeoMeta({
             <div class="inline-flex items-center text-xs py-1.5 gap-1">
               <Icon name="line-md:star-alt-twotone-right-half" mode="svg" size="1.2rem"
                 class="shrink-0 text-zinc-400" />
-              <span class="p-0.5">98 stars</span>
+              <span class="p-0.5">{{ pluginData.github.stars }} stars</span>
               <span class="inline-block size-1 rounded-full bg-zinc-400 mx-1" />
               <Icon name="boxicons:price-tag-alt" mode="svg" size="16" class="shrink-0 text-zinc-400" />
-              <span class="p-0.5">v1.2.1</span>
+              <span class="p-0.5">{{ pluginData.github.release?.tag }}</span>
               <span class="p-1">|</span>
               <ULink to="#" class="hover:-translate-y-1 hover:scale-110 transition-all duration-300">
-                <UTooltip text="Miguel">
-                  <UAvatar src="https://avatars.githubusercontent.com/u/97977665?s=130&v=4" size="sm" loading="lazy" />
+                <UTooltip :text="pluginData.github.contributors?.[0]?.login" placement="top">
+                  <UAvatar :src="pluginData.github.contributors?.[0]?.avatarUrl" size="sm" loading="lazy"
+                    :alt="pluginData.github.contributors?.[0]?.login" />
                 </UTooltip>
               </ULink>
             </div>
           </div>
         </div>
 
-        <UButton to="/catalog" color="neutral" variant="outline" class="self-center mr-[10%]">
+        <UButton color="neutral" :href="pluginData.github.downloadUrl" target="_blank" rel="noopener noreferrer"
+          variant="outline" class="self-center mr-[10%]">
           <Icon name="line-md:download" mode="svg" />
           Get Plugin
         </UButton>
@@ -116,22 +118,37 @@ useSeoMeta({
           <div class="px-4 py-2">
             <div class="grid grid-rows-3 gap-2">
               <h2>Details</h2>
-              <ULink to="#"
+              <ULink to="#" target="_blank"
                 class="inline-flex items-center gap-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
                 <Icon name="material-symbols:bigtop-updates" mode="svg" size="1.2rem" />
-                <span>Updated 3 weeks ago</span>
+                <span>
+                  Updated
+                  <NuxtTime v-if="pluginData.github?.updatedAt" :datetime="pluginData.github.updatedAt" relative
+                    :title="new Date(pluginData.github.updatedAt).toLocaleDateString('en-US', { dateStyle: 'long' })" />
+                  <template v-else>—</template>
+                </span>
               </ULink>
-              <ULink to="#"
+
+              <ULink to="#" target="_blank"
                 class="inline-flex items-center gap-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
                 <Icon name="griddy-icons:code-package" mode="svg" size="1.2rem" />
-                <span>Created 2 years ago</span>
+                <span>
+                  Created
+                  <NuxtTime v-if="pluginData.github?.createdAt" :datetime="pluginData.github.createdAt" relative
+                    :title="new Date(pluginData.github.createdAt).toLocaleDateString('en-US', { dateStyle: 'long' })" />
+                  <template v-else>—</template>
+                </span>
               </ULink>
             </div>
           </div>
-
-          <div class="grid grid-rows-3 gap-1 px-4 py-2">
-            <h2>Contributors <span class="not-dark:bg-zinc-200 p-1 rounded-full text-sm">10</span></h2>
-            <AvatarGroup />
+          <div v-if="pluginData.github?.contributors?.length" class="flex flex-col gap-2 px-4 py-2">
+            <h2>
+              Contributors
+              <span class="not-dark:bg-zinc-200 p-1 rounded-full text-sm">
+                {{ pluginData.github.contributorCount }}
+              </span>
+            </h2>
+            <AvatarGroup :contributors="pluginData.github.contributors" :max="10" />
           </div>
         </aside>
       </div>
