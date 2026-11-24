@@ -3,6 +3,7 @@
 # nuxt
 .nuxt
 .data
+.output
 
 labs-skeleton
 

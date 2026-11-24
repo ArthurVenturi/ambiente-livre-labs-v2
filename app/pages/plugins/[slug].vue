@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import type { TabsItem } from '@nuxt/ui'
-import AvatarGroup from '~/components/elements/AvatarGroup.vue'
+import type { Plugin } from '~/types/plugin'
+import AvatarGroup from '~/components/element/AvatarGroup.vue'
+
+const props = defineProps<{
+  plugin: Plugin
+}>()
 
 const items = ref<TabsItem[]>([
   { label: 'Overview', value: 'overview', icon: 'line-md:confirm-circle' },

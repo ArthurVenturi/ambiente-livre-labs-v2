@@ -66,7 +66,6 @@ const pluginUrl = computed(() => {
           </UBadge>
         </div>
       </div>
-
     </div>
   </UCard>
   </NuxtLink>

@@ -17,15 +17,17 @@ function toggleColorMode() {
     colorMode.preference = isDark.value ? 'light' : 'dark'
 }
 
-const productItems = [[
-    { label: 'Plugin catalog', to: '/catalog', description: 'Browse integrations and extensions', icon: 'line-md:library' },
-    { label: 'Submit a plugin', to: '/catalog#submit', description: 'Share your work with the community', icon: 'line-md:plus' },
-]]
+const pages = [
+    {
+        label: 'Plugins',
+        to: '/catalog'
+    },
+    {
+        label: 'Talks',
+        to: '/talks'
+    }
+]
 
-const serviceItems = [[
-    { label: 'Consulting', to: '#', description: 'Open-source implementation support', icon: 'line-md:briefcase' },
-    { label: 'Support', to: '#', description: 'Get help from our team', icon: 'line-md:chat' },
-]]
 </script>
 
 <template>
@@ -36,14 +38,9 @@ const serviceItems = [[
 
         <!-- Desktop Nav Items -->
         <div class="hidden items-center gap-1 rounded-full bg-default px-2 py-1 shadow-sm md:flex">
-            <UDropdownMenu :items="productItems" :content="{ align: 'start' }">
-                <UButton color="neutral" variant="ghost" trailing-icon="line-md:chevron-down">Products</UButton>
-            </UDropdownMenu>
-            <UDropdownMenu :items="serviceItems" :content="{ align: 'start' }">
-                <UButton color="neutral" variant="ghost" trailing-icon="line-md:chevron-down">Services</UButton>
-            </UDropdownMenu>
-            <NuxtLink v-for="label in ['Apps', 'Pricing', 'Talks']" :key="label" to="/talks"
-                class="rounded-full px-3 py-2 text-sm text-default no-underline hover:bg-elevated">{{ label }}
+            <NuxtLink v-for="page in pages" :key="page.label" :to="page.to"
+                class="rounded-full px-3 py-2 text-sm text-default no-underline hover:bg-elevated">
+                {{ page.label }}
             </NuxtLink>
         </div>
 
